@@ -170,100 +170,92 @@ const ApproveCandidate = () => {
 
   return (
     <div className=" p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {data.length === 0 ? (
-        <div className="col-span-full text-center text-lg font-medium">
-          No applications are there
-        </div>
-      ) : (
-        applications.map((job) =>
-          job.applications
-            .filter(
-              (application) => application.applicationStatus === "Pending"
-            )
-            .map((application) => (
-              <Card key={application.candidateId} className="w-full">
-                <CardHeader>
-                  <CardTitle>{application.candidateName}</CardTitle>
-                  <CardDescription>{job.jobTitle}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Label>Email</Label>
-                    <Input value={application.candidateEmail} readOnly />
-                    <Label>Status</Label>
-                    <Input value={application.applicationStatus} readOnly />
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          setSelectedApplication({
-                            jobId: job.jobId,
-                            candidateId: application.candidateId,
-                          });
-                          setActionType("reject");
-                        }}
-                      >
+      {applications.map((job) =>
+        job.applications
+          .filter((application) => application.applicationStatus === "Pending")
+          .map((application) => (
+            <Card key={application.candidateId} className="w-full">
+              <CardHeader>
+                <CardTitle>{application.candidateName}</CardTitle>
+                <CardDescription>{job.jobTitle}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <Label>Email</Label>
+                  <Input value={application.candidateEmail} readOnly />
+                  <Label>Status</Label>
+                  <Input value={application.applicationStatus} readOnly />
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedApplication({
+                          jobId: job.jobId,
+                          candidateId: application.candidateId,
+                        });
+                        setActionType("reject");
+                      }}
+                    >
+                      Reject
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to reject this candidate?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. You will be rejecting the
+                        candidate "{application.candidateName}".
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleAction}>
                         Reject
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you sure you want to reject this candidate?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. You will be rejecting
-                          the candidate "{application.candidateName}".
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleAction}>
-                          Reject
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        onClick={() => {
-                          setSelectedApplication({
-                            jobId: job.jobId,
-                            candidateId: application.candidateId,
-                          });
-                          setActionType("accept");
-                        }}
-                      >
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      onClick={() => {
+                        setSelectedApplication({
+                          jobId: job.jobId,
+                          candidateId: application.candidateId,
+                        });
+                        setActionType("accept");
+                      }}
+                    >
+                      Accept
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to accept this candidate?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. You will be accepting the
+                        candidate "{application.candidateName}".
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleAction}>
                         Accept
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you sure you want to accept this candidate?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. You will be accepting
-                          the candidate "{application.candidateName}".
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleAction}>
-                          Accept
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </CardFooter>
-              </Card>
-            ))
-        )
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </CardFooter>
+            </Card>
+          ))
       )}
     </div>
   );
