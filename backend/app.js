@@ -7,16 +7,23 @@ const auth = require("./middleware/auth");
 const cors = require("cors");
 const app = express();
 
+app.options("*", cors());
+
+const allowedOrigins = ["https://job-portal-backend-rhaq.onrender.com/"];
+
 app.use(
   cors({
-    origin:
-      "https://job-portal-mqjst605n-priyank-vaghelas-projects.vercel.app/", // Replace with your React app URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
-    credentials: true,
+    origin: function (origin, callback) {
+      if (allowedOrigins.includes(origin) || !origin) {
+        console.log("Cor successfull");
+        callback(null, true);
+      } else {
+        console.log("Cor Failed");
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
-
 app.use(express.json());
 app.use(bodyParser.json());
 dotenv.config();
