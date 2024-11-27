@@ -72,7 +72,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/usr/login",
+        "https://job-portal-backend-rhaq.onrender.com/api/usr/login",
         { username: loginUsername, password: loginPassword },
         {
           headers: {
