@@ -20,16 +20,15 @@
 
 ## 📝 Table of Contents
 
-- [Dependencies / Limitations](#limitations)
-- [Future Scope](#future_scope)
+- [Key Features](#features)
 - [Setting up a local environment](#getting_started)
 - [Usage](#usage)
 - [Technology Stack](#tech_stack)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgments)
+- [Installing Part](#installing)
 
-## Key Features
+- [Authors](#authors)
+
+## Key Features <a name = "features"></a>
 
 - **User Authentication and Authorization**: Secure user registration and login with role-based access control.
 - **Admin Dashboard**: Allows administrators to manage user roles and view system-wide statistics.
@@ -50,7 +49,7 @@ What things you need to install the software and how to install them.
 - **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **MongoDB**: Install MongoDB from [mongodb.com](https://www.mongodb.com/)
 
-### Installing
+### Installing <a name = "installing"></a>
 
 A step-by-step series of examples that tell you how to get a development environment running.
 
