@@ -9,7 +9,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your React app URL
+    origin:
+      "https://job-portal-mqjst605n-priyank-vaghelas-projects.vercel.app/", // Replace with your React app URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept"],
     credentials: true,
