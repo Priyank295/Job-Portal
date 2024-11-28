@@ -113,8 +113,6 @@ const ApproveCandidate = () => {
             "An error occurred while approving the candidate.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
       }
     } else {
       toast({
@@ -157,8 +155,6 @@ const ApproveCandidate = () => {
             "An error occurred while rejecting the candidate.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
       }
     } else {
       toast({

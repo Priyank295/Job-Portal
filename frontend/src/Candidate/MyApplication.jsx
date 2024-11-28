@@ -107,7 +107,6 @@ const MyApplication = () => {
           ))}
         </div>
       )}
-      ;
     </div>
   );
 };

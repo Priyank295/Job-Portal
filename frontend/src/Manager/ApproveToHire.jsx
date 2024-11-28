@@ -102,8 +102,6 @@ const ApproveToHire = () => {
             "An error occurred while hiring the candidate.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
       }
     } else {
       toast({

@@ -99,8 +99,6 @@ const ApproveJob = () => {
             "An error occurred while approving the job.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
       }
     } else {
       toast({
@@ -143,8 +141,6 @@ const ApproveJob = () => {
             "An error occurred while rejecting the job.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
       }
     } else {
       toast({

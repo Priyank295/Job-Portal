@@ -56,10 +56,6 @@ const AdminDashboard = () => {
             ...response.data.users.Recruiter,
           ];
           setUsers(allUsers);
-          toast({
-            title: "Users retrieved successfully",
-            description: response.data.message,
-          });
         } catch (error) {
           toast({
             title: "Error fetching users",
