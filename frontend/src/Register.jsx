@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axiosInstance from "./axiosInstance";
 import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
@@ -41,18 +42,17 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/usr/register",
+      const response = await axiosInstance.post(
+        "/usr/register",
         { username, email, password },
         {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          withCredentials: true,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
@@ -71,15 +71,11 @@ const Register = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://job-portal-backend-rhaq.onrender.com/api/usr/login",
+      const response = await axiosInstance.post(
+        "/usr/login",
         { username: loginUsername, password: loginPassword },
         {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          withCredentials: true,
+          //
         }
       );
 

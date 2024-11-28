@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
+import axiosInstance from "../axiosInstance";
 const ApproveCandidate = () => {
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -36,8 +36,8 @@ const ApproveCandidate = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/recruiter/getAllJobApplications",
+        const response = await axiosInstance.get(
+          "/recruiter/getAllJobApplications",
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,
@@ -53,7 +53,7 @@ const ApproveCandidate = () => {
             )
           )
         );
-        console.log(data);
+        // console.log(data);
 
         // console.log(response.data.allApplications);
       } catch (error) {
@@ -83,8 +83,8 @@ const ApproveCandidate = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/recruiter/${jobId}/approve/${candidateId}`,
+        const response = await axiosInstance.post(
+          `/recruiter/${jobId}/approve/${candidateId}`,
           {},
           {
             headers: {
@@ -124,8 +124,8 @@ const ApproveCandidate = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/recruiter/reject-application/${jobId}/${candidateId}`,
+        const response = await axiosInstance.post(
+          `/recruiter/reject-application/${jobId}/${candidateId}`,
           {},
           {
             headers: {

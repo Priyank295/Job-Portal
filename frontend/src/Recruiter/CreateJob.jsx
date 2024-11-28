@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import axiosInstance from "../axiosInstance";
 
 const CreateJob = () => {
   const [pending, startTransition] = useTransition();
@@ -46,8 +47,8 @@ const CreateJob = () => {
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/recruiter/create-job",
+      const response = await axiosInstance.post(
+        "/recruiter/create-job",
         {
           title: form.jobTitle,
           company: form.company,

@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import axiosInstance from "../axiosInstance";
 
 const ApproveJob = () => {
   const [jobs, setJobs] = useState([]);
@@ -35,14 +36,11 @@ const ApproveJob = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/hiringManager/pendingJobs",
-          {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          }
-        );
+        const response = await axiosInstance.get("/hiringManager/pendingJobs", {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        });
         setJobs(response.data.jobs);
       } catch (error) {
         toast({
@@ -70,8 +68,8 @@ const ApproveJob = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/hiringManager/approveJob/${id}`,
+        const response = await axiosInstance.post(
+          `/hiringManager/approveJob/${id}`,
           {},
           {
             headers: {
@@ -111,8 +109,8 @@ const ApproveJob = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/hiringManager/reject-job/${id}`,
+        const response = await axiosInstance.post(
+          `/hiringManager/reject-job/${id}`,
           {},
           {
             headers: {

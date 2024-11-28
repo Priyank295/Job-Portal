@@ -31,6 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import axiosInstance from "../axiosInstance";
 
 const AllCandidate = () => {
   const [applications, setApplications] = useState([]);
@@ -42,8 +43,8 @@ const AllCandidate = () => {
 
       if (storedToken) {
         try {
-          const response = await axios.get(
-            "http://localhost:8080/api/recruiter/getAllJobApplications",
+          const response = await axiosInstance.get(
+            "/recruiter/getAllJobApplications",
             {
               headers: {
                 Authorization: `Bearer ${storedToken}`,

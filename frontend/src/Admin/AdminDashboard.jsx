@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import axiosInstance from "../axiosInstance";
 
 const roles = [
   { value: "Candidate", label: "Candidate" },
@@ -42,14 +43,11 @@ const AdminDashboard = () => {
 
       if (storedToken) {
         try {
-          const response = await axios.get(
-            "http://localhost:8080/api/admin/getUsers",
-            {
-              headers: {
-                Authorization: `Bearer ${storedToken}`,
-              },
-            }
-          );
+          const response = await axiosInstance.get("/admin/getUsers", {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          });
           const allUsers = [
             ...response.data.users.Candidate,
             ...response.data.users.Hiring_Manager,
@@ -86,8 +84,8 @@ const AdminDashboard = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.put(
-          `http://localhost:8080/api/admin/changeUserRole/${userId}`,
+        const response = await axiosInstance.put(
+          `/admin/changeUserRole/${userId}`,
           { role: newRole },
           {
             headers: {

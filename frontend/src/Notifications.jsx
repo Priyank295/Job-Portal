@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import axiosInstance from "./axiosInstance";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -21,14 +22,11 @@ const Notifications = () => {
 
       if (storedToken) {
         try {
-          const response = await axios.get(
-            "http://localhost:8080/api/usr/inbox",
-            {
-              headers: {
-                Authorization: `Bearer ${storedToken}`,
-              },
-            }
-          );
+          const response = await axiosInstance.get("/usr/inbox", {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          });
           setNotifications(response.data.notifications);
         } catch (error) {
           toast({
