@@ -27,6 +27,15 @@
 - [Installing Part](#installing)
 
 - [Authors](#authors)
+-
+
+### Deployed Client Link : https://job-portal-one-coral.vercel.app/
+
+### Deployed Server Link : https://job-portal-backend-rhaq.onrender.com
+
+### POSTMAN WORKSPACE LINK: [click here](https://drive.google.com/drive/folders/1IaD9wKG3ZIHE6UxH-S9yDZxApRRdSnHn?usp=sharing)
+
+### Documentation link [Click here](https://drive.google.com/drive/folders/1IaD9wKG3ZIHE6UxH-S9yDZxApRRdSnHn?usp=sharing)
 
 ## Key Features <a name = "features"></a>
 
@@ -102,18 +111,25 @@ A step-by-step series of examples that tell you how to get a development environ
 ## 🎈 Usage <a name="usage"></a>
 
 1. Admin:
+   - username : admin
+   - pasword : abc@123
 
 - Log in as an admin to manage user roles and view system-wide statistics.
 
 2. Recruiter:
+   - username : Recruiter
+   - pasword : abc@123
 
 - Log in as a recruiter to create job postings, approve or reject candidate applications, and manage job listings.
 
 3. Hiring Manager:
+   - username : Hiring-Manager
+   - pasword : abc@123
 
 - Log in as a hiring manager to approve job postings, review approved applications, and make final hiring decisions.
 
 4. Candidate:
+   - You can register by your self
 
 - Log in as a candidate to view job listings, apply for jobs, and track the status of your applications.
 
