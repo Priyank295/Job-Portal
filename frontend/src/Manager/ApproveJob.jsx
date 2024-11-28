@@ -30,12 +30,14 @@ const ApproveJob = () => {
   const [selectedJobId, setSelectedJobId] = useState(null);
   const [actionType, setActionType] = useState("");
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
   const fetchJobs = async () => {
     const storedToken = localStorage.getItem("token");
 
     if (storedToken) {
       try {
+        setLoading(true);
         const response = await axiosInstance.get("/hiringManager/pendingJobs", {
           headers: {
             Authorization: `Bearer ${storedToken}`,
@@ -49,6 +51,8 @@ const ApproveJob = () => {
             error.response?.data || "An error occurred while fetching jobs.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -68,6 +72,7 @@ const ApproveJob = () => {
 
     if (storedToken) {
       try {
+        setLoading(true);
         const response = await axiosInstance.post(
           `/hiringManager/approveJob/${id}`,
           {},
@@ -94,6 +99,8 @@ const ApproveJob = () => {
             "An error occurred while approving the job.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -109,6 +116,7 @@ const ApproveJob = () => {
 
     if (storedToken) {
       try {
+        setLoading(true);
         const response = await axiosInstance.post(
           `/hiringManager/reject-job/${id}`,
           {},
@@ -135,6 +143,8 @@ const ApproveJob = () => {
             "An error occurred while rejecting the job.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -155,7 +165,15 @@ const ApproveJob = () => {
 
   return (
     <div className="p-4">
-      {jobs.length === 0 ? (
+      {loading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="flex flex-col items-center space-y-4">
+            {" "}
+            <div className="animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 h-12 w-12" />{" "}
+            <p className="text-gray-500 dark:text-gray-400">Loading...</p>{" "}
+          </div>
+        </div>
+      ) : jobs.length === 0 ? (
         <div className="flex justify-center items-center h-full">
           <p className="text-lg font-medium">
             No jobs are pending for approval

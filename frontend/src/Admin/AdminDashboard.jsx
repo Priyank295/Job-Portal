@@ -36,6 +36,7 @@ const roles = [
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -43,6 +44,7 @@ const AdminDashboard = () => {
 
       if (storedToken) {
         try {
+          setLoading(true);
           const response = await axiosInstance.get("/admin/getUsers", {
             headers: {
               Authorization: `Bearer ${storedToken}`,
@@ -65,6 +67,8 @@ const AdminDashboard = () => {
               error.response?.data || "An error occurred while fetching users.",
             variant: "destructive",
           });
+        } finally {
+          setLoading(false);
         }
       } else {
         toast({
@@ -84,6 +88,7 @@ const AdminDashboard = () => {
 
     if (storedToken) {
       try {
+        setLoading(true);
         const response = await axiosInstance.put(
           `/admin/changeUserRole/${userId}`,
           { role: newRole },
@@ -115,6 +120,8 @@ const AdminDashboard = () => {
             "An error occurred while updating the role.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -126,24 +133,38 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {users.map((user) => (
-        <Card key={user.id} className="w-full">
-          <CardHeader>
-            <CardTitle>{user.username}</CardTitle>
-            <CardDescription>{user.email}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Label>Role</Label>
-              <RoleSelect
-                currentRole={user.role}
-                onRoleChange={(newRole) => handleRoleChange(user.id, newRole)}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+    <div>
+      {loading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="flex flex-col items-center space-y-4">
+            {" "}
+            <div className="animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 h-12 w-12" />{" "}
+            <p className="text-gray-500 dark:text-gray-400">Loading...</p>{" "}
+          </div>
+        </div>
+      ) : (
+        <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {users.map((user) => (
+            <Card key={user.id} className="w-full">
+              <CardHeader>
+                <CardTitle>{user.username}</CardTitle>
+                <CardDescription>{user.email}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <Label>Role</Label>
+                  <RoleSelect
+                    currentRole={user.role}
+                    onRoleChange={(newRole) =>
+                      handleRoleChange(user.id, newRole)
+                    }
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

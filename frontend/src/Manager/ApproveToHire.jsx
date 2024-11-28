@@ -23,20 +23,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import axiosInstance from "../axiosInstance";
 
 const ApproveToHire = () => {
   const [approvedApplications, setApprovedApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [actionType, setActionType] = useState("");
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
   const fetchApprovedApplications = async () => {
     const storedToken = localStorage.getItem("token");
 
     if (storedToken) {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/hiringManager/getApprovedApplications",
+        setLoading(true);
+        const response = await axiosInstance.get(
+          "/hiringManager/getApprovedApplications",
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,
@@ -52,6 +55,8 @@ const ApproveToHire = () => {
             "An error occurred while fetching approved applications.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -71,8 +76,9 @@ const ApproveToHire = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/hiringManager/${jobId}/hire/${candidateId}`,
+        setLoading(true);
+        const response = await axiosInstance.post(
+          `/hiringManager/${jobId}/hire/${candidateId}`,
           {},
           {
             headers: {
@@ -96,6 +102,8 @@ const ApproveToHire = () => {
             "An error occurred while hiring the candidate.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
       toast({
@@ -111,8 +119,9 @@ const ApproveToHire = () => {
 
     if (storedToken) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/hiringManager/reject-hiring/${jobId}/${candidateId}`,
+        setLoading(true);
+        const response = await axiosInstance.post(
+          `/hiringManager/reject-hiring/${jobId}/${candidateId}`,
           {},
           {
             headers: {
@@ -137,6 +146,8 @@ const ApproveToHire = () => {
             "An error occurred while rejecting the candidate.",
           variant: "destructive",
         });
+      } finally {
+        setLoading(true);
       }
     } else {
       toast({
@@ -157,7 +168,15 @@ const ApproveToHire = () => {
 
   return (
     <div className="p-4">
-      {approvedApplications.length === 0 ? (
+      {loading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="flex flex-col items-center space-y-4">
+            {" "}
+            <div className="animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 h-12 w-12" />{" "}
+            <p className="text-gray-500 dark:text-gray-400">Loading...</p>{" "}
+          </div>
+        </div>
+      ) : approvedApplications.length === 0 ? (
         <div className="flex justify-center items-center h-full">
           <p className="text-lg font-medium">
             No candidates are there for hiring approval

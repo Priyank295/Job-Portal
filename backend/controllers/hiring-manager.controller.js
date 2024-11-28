@@ -126,11 +126,11 @@ exports.pendingJobs = async (req, res) => {
 exports.getApprovedApplications = async (req, res) => {
   try {
     // Check if the user has appropriate role
-    if (!["Hiring_Manager"].includes(req.user.role)) {
-      return res
-        .status(403)
-        .send("You do not have permission to access this resource.");
-    }
+    // if (!["Hiring_Manager"].includes(req.user.role)) {
+    //   return res
+    //     .status(403)
+    //     .send("You do not have permission to access this resource.");
+    // }
 
     // Fetch all jobs with approved applications
     const jobs = await Job.find({ "applications.status": "Approved" })

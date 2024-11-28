@@ -30,6 +30,7 @@ import {
 import axiosInstance from "../axiosInstance";
 
 const CreateJob = () => {
+  const [loading, setLoading] = useState(false);
   const [pending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -45,6 +46,7 @@ const CreateJob = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     try {
       const response = await axiosInstance.post(
@@ -84,98 +86,110 @@ const CreateJob = () => {
           "There was an error creating the job. Please try again later.",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <section className="custom-screen-lg mx-auto z-20">
-      <div className="relative backdrop-blur-3xl z-10 max-w-4xl mx-auto space-y-4">
-        <Card className="relative mt-20 py-10 z-20 backdrop-blur-3xl">
-          <CardHeader>
-            <CardTitle>Create Job</CardTitle>
-            <CardDescription>
-              Fill out the form below to create a new job listing.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form className="space-y-4 z-20">
-              <div className="space-y-2">
-                <Label htmlFor="jobTitle">Job Title</Label>
-                <Input
-                  value={form.jobTitle}
-                  onChange={handleChange}
-                  name="jobTitle"
-                  placeholder="Enter the job title"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
-                <Input
-                  value={form.company}
-                  onChange={handleChange}
-                  name="company"
-                  placeholder="Enter the company name"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input
-                  value={form.location}
-                  onChange={handleChange}
-                  name="location"
-                  placeholder="Enter the job location"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description">Job Description</Label>
-                <Textarea
-                  value={form.description}
-                  onChange={handleChange}
-                  name="description"
-                  placeholder="Enter the job description"
-                  required
-                />
-              </div>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    disabled={pending}
-                    variant="default"
-                    className="inline-flex rounded-3xl text-center group items-center w-full justify-center bg-gradient-to-tr from-black/90 via-zinc-800 to-black border-input border-[1px] hover:bg-transparent/10 transition-colors sm:w-auto py-6 px-10"
-                  >
-                    Submit
-                    {pending ? (
-                      <Loader2 className="animate-spin ml-3 w-4 h-4 flex items-center" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
-                    )}
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you sure you want to create this job?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. You will be creating a new
-                      job listing.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleSubmit}>
-                      Create
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+      {loading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="flex flex-col items-center space-y-4">
+            {" "}
+            <div className="animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 h-12 w-12" />{" "}
+            <p className="text-gray-500 dark:text-gray-400">Loading...</p>{" "}
+          </div>
+        </div>
+      ) : (
+        <div className="relative backdrop-blur-3xl z-10 max-w-4xl mx-auto space-y-4">
+          <Card className="relative mt-20 py-10 z-20 backdrop-blur-3xl">
+            <CardHeader>
+              <CardTitle>Create Job</CardTitle>
+              <CardDescription>
+                Fill out the form below to create a new job listing.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4 z-20">
+                <div className="space-y-2">
+                  <Label htmlFor="jobTitle">Job Title</Label>
+                  <Input
+                    value={form.jobTitle}
+                    onChange={handleChange}
+                    name="jobTitle"
+                    placeholder="Enter the job title"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="company">Company</Label>
+                  <Input
+                    value={form.company}
+                    onChange={handleChange}
+                    name="company"
+                    placeholder="Enter the company name"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+                  <Input
+                    value={form.location}
+                    onChange={handleChange}
+                    name="location"
+                    placeholder="Enter the job location"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Job Description</Label>
+                  <Textarea
+                    value={form.description}
+                    onChange={handleChange}
+                    name="description"
+                    placeholder="Enter the job description"
+                    required
+                  />
+                </div>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      disabled={pending}
+                      variant="default"
+                      className="inline-flex rounded-3xl text-center group items-center w-full justify-center bg-gradient-to-tr from-black/90 via-zinc-800 to-black border-input border-[1px] hover:bg-transparent/10 transition-colors sm:w-auto py-6 px-10"
+                    >
+                      Submit
+                      {pending ? (
+                        <Loader2 className="animate-spin ml-3 w-4 h-4 flex items-center" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
+                      )}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to create this job?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. You will be creating a new
+                        job listing.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleSubmit}>
+                        Create
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </section>
   );
 };

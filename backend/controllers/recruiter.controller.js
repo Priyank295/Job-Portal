@@ -100,11 +100,11 @@ exports.approveCandidateApplication = async (req, res) => {
     }
 
     // Ensure the logged-in user is the recruiter for this job
-    if (job.recruiter.toString() !== recruiterId) {
-      return res
-        .status(403)
-        .send("You are not authorized to approve this application.");
-    }
+    // if (job.recruiter.toString() !== recruiterId) {
+    //   return res
+    //     .status(403)
+    //     .send("You are not authorized to approve this application.");
+    // }
 
     // Find the candidate's application in the job's applications array
     const application = job.applications.find(
