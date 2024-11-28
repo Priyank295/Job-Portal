@@ -43,7 +43,6 @@
 
 - Username : admin
 - Password : abc@123
--
 
 ## Recruiter
 
