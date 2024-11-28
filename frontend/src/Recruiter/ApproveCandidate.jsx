@@ -47,16 +47,27 @@ const ApproveCandidate = () => {
         );
         setApplications(response.data.allApplications);
 
-        setData(
-          applications.map((job) =>
-            job.applications.filter(
-              (application) => application.applicationStatus === "Pending"
-            )
-          )
+        // response.data.allApplications.map((job) =>
+        //   job.applications.filter((application) => {
+        //     if (application.applicationStatus === "Pending") {
+
+        //     }
+        //   })
+        // );
+
+        response.data.allApplications.map((job) =>
+          job.applications.map((application) => {
+            if (application.applicationStatus === "Pending") {
+              setData(...data, application);
+            }
+          })
         );
+
         // console.log(data);
 
-        // console.log(response.data.allApplications);
+        // console.log(
+        //   response.data.allApplications[0].applications[0].applicationStatus
+        // );
       } catch (error) {
         toast({
           title: "Error fetching applications",
@@ -83,7 +94,7 @@ const ApproveCandidate = () => {
 
   const handleAccept = async (jobId, candidateId) => {
     const storedToken = localStorage.getItem("token");
-
+    setData([]);
     if (storedToken) {
       try {
         setLoading(true);
@@ -125,7 +136,7 @@ const ApproveCandidate = () => {
 
   const handleReject = async (jobId, candidateId) => {
     const storedToken = localStorage.getItem("token");
-
+    setData([]);
     if (storedToken) {
       try {
         setLoading(true);
@@ -182,6 +193,12 @@ const ApproveCandidate = () => {
             <div className="animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 h-12 w-12" />{" "}
             <p className="text-gray-500 dark:text-gray-400">Loading...</p>{" "}
           </div>
+        </div>
+      ) : data.length === 0 ? (
+        <div className="flex justify-center items-center h-full">
+          <p className="text-lg font-medium">
+            No Candidates are pending for approval
+          </p>
         </div>
       ) : (
         <div className=" p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
