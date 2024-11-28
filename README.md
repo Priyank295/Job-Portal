@@ -37,6 +37,24 @@
 
 ### Documentation link [Click here](https://drive.google.com/drive/folders/1IaD9wKG3ZIHE6UxH-S9yDZxApRRdSnHn?usp=sharing)
 
+### Used Credentials
+
+## Admin
+
+- Username : admin
+- Password : abc@123
+-
+
+## Recruiter
+
+- Username : Recruiter
+- Password : abc@123
+
+## Hiring Manager
+
+- Username : Hiring-Manager
+- Password : abc@123
+
 ## Key Features <a name = "features"></a>
 
 - **User Authentication and Authorization**: Secure user registration and login with role-based access control.
