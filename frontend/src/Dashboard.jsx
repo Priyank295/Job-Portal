@@ -223,7 +223,7 @@ const Dashboard = () => {
         </DropdownMenu>
 
         <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-white">
             <AlertDialogHeader>
               <AlertDialogTitle>
                 Are you sure you want to sign out?
